@@ -23,17 +23,6 @@ const pokemonTypes = [
   "fairy",
 ];
 
-const generations = [
-  { id: 1, range: "1-151" },
-  { id: 2, range: "152-251" },
-  { id: 3, range: "252-386" },
-  { id: 4, range: "387-493" },
-  { id: 5, range: "494-649" },
-  { id: 6, range: "650-721" },
-  { id: 7, range: "722-809" },
-  { id: 8, range: "810-898" },
-];
-
 const sizeCategories = ["Tiny", "Small", "Medium", "Large", "Extra Large"];
 
 const Filters = ({ onFilterChange }) => {
@@ -50,7 +39,7 @@ const Filters = ({ onFilterChange }) => {
     <div className="relative z-10">
       <button
         onClick={() => setShowFilters(!showFilters)}
-        className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+        className="px-4 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
       >
         {showFilters ? "Hide Filters" : "Show Filters"}
       </button>
@@ -73,21 +62,6 @@ const Filters = ({ onFilterChange }) => {
               {pokemonTypes.map((type) => (
                 <option key={type} value={type}>
                   {type.charAt(0).toUpperCase() + type.slice(1)}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium">Generation</label>
-            <select
-              onChange={(e) => handleFilterChange("generation", e.target.value)}
-              value={filters.generation || ""}
-              className="w-full p-2 border rounded text-sm"
-            >
-              <option value="">All Generations</option>
-              {generations.map((gen) => (
-                <option key={gen.id} value={gen.id}>
-                  Gen {gen.id} ({gen.range})
                 </option>
               ))}
             </select>
