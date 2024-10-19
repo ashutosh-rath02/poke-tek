@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import FusionDetailsModal from "./FusionDetailsModal";
+import BattlePredictor from "./BattlePredictor";
+import { searchPokemon } from "../services/api";
 
 const FusionSidebar = ({
   selectedPokemon,
@@ -11,6 +14,10 @@ const FusionSidebar = ({
   isLoading,
 }) => {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [opponentPokemon, setOpponentPokemon] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
   const sidebarVariants = {
     hidden: { x: "100%" },
     visible: {
@@ -18,6 +25,18 @@ const FusionSidebar = ({
       transition: { type: "spring", stiffness: 300, damping: 30 },
     },
   };
+
+  useEffect(() => {
+    if (searchTerm.length > 2) {
+      const delayDebounceFn = setTimeout(() => {
+        searchPokemon(searchTerm).then(setSearchResults);
+      }, 300);
+
+      return () => clearTimeout(delayDebounceFn);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
 
   return (
     <>
@@ -52,7 +71,8 @@ const FusionSidebar = ({
             </svg>
           </motion.button>
         </div>
-        <div className="space-y-4">
+
+        <div className="space-y-4 mb-6">
           {selectedPokemon.map((pokemon, index) => (
             <motion.div
               key={index}
@@ -84,6 +104,7 @@ const FusionSidebar = ({
             </motion.div>
           ))}
         </div>
+
         {selectedPokemon.length === 2 && (
           <motion.button
             onClick={onFuse}
@@ -105,6 +126,7 @@ const FusionSidebar = ({
             Clear Selection
           </motion.button>
         )}
+
         {fusionResult && (
           <motion.div
             className="mt-8 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg p-6 shadow-md"
@@ -130,30 +152,10 @@ const FusionSidebar = ({
                       key={index}
                       className="px-2 py-1 bg-indigo-200 rounded-full text-xs capitalize text-indigo-800 mr-1 mb-1"
                     >
-                      {type.type ? type.type.name : type}
+                      {typeof type === "string" ? type : type.type.name}
                     </span>
                   ))}
                 </div>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-indigo-800">Abilities:</h4>
-              <ul className="list-disc list-inside text-indigo-700">
-                {fusionResult.abilities.map((ability, index) => (
-                  <li key={index} className="capitalize">
-                    {ability}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              <div>
-                <p className="font-semibold text-indigo-800">Height:</p>
-                <p className="text-indigo-700">{fusionResult.height} m</p>
-              </div>
-              <div>
-                <p className="font-semibold text-indigo-800">Weight:</p>
-                <p className="text-indigo-700">{fusionResult.weight} kg</p>
               </div>
             </div>
             <motion.button
@@ -166,9 +168,67 @@ const FusionSidebar = ({
             </motion.button>
           </motion.div>
         )}
+
+        {fusionResult && (
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4 text-indigo-800">
+              Battle Predictor
+            </h3>
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="Search for an opponent..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full p-2 border rounded"
+              />
+              {searchResults.length > 0 && (
+                <ul className="mt-2 max-h-40 overflow-y-auto bg-white border rounded">
+                  {searchResults.map((pokemon) => (
+                    <li
+                      key={pokemon.id}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setOpponentPokemon(pokemon);
+                        setSearchTerm("");
+                        setSearchResults([]);
+                      }}
+                    >
+                      {pokemon.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            {opponentPokemon && (
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2">
+                  Selected Opponent:
+                </h4>
+                <div className="flex items-center space-x-2">
+                  <img
+                    src={opponentPokemon.sprites.front_default}
+                    alt={opponentPokemon.name}
+                    className="w-16 h-16"
+                  />
+                  <span className="text-lg capitalize">
+                    {opponentPokemon.name}
+                  </span>
+                </div>
+              </div>
+            )}
+            {opponentPokemon && (
+              <BattlePredictor
+                pokemon1={fusionResult}
+                pokemon2={opponentPokemon}
+              />
+            )}
+          </div>
+        )}
       </motion.div>
+
       <AnimatePresence>
-        {showDetailsModal && (
+        {showDetailsModal && fusionResult && (
           <FusionDetailsModal
             fusionResult={fusionResult}
             onClose={() => setShowDetailsModal(false)}

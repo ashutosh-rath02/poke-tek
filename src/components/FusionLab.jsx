@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PokemonList from "./PokemonList";
-import FusionSidebar from "./FusionSidebar";
 import { motion, AnimatePresence } from "framer-motion";
+import FusionSidebar from "./FusionSidebar";
 
 const FusionLab = () => {
   const [selectedPokemon, setSelectedPokemon] = useState([]);
