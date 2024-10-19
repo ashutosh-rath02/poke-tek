@@ -12,7 +12,7 @@ const PokemonCard = ({ pokemon, onSelect, isSelected, onInfoClick }) => {
         }`}
       onClick={() => onSelect(pokemon)}
     >
-      <div className="relative z-10">
+      <div className="relative">
         <img
           src={pokemon.sprites.front_default}
           alt={pokemon.name}
@@ -33,7 +33,7 @@ const PokemonCard = ({ pokemon, onSelect, isSelected, onInfoClick }) => {
         </div>
       </div>
       <motion.button
-        className="absolute -top-3 -right-3 bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg z-20"
+        className="absolute -top-3 -right-3 bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg"
         whileHover={{ scale: 1.1, backgroundColor: "#4338ca" }}
         whileTap={{ scale: 0.9 }}
         onClick={(e) => {
