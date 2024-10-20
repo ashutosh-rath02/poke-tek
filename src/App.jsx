@@ -14,7 +14,7 @@ function App() {
           <h1 className="text-3xl font-bold">Pokémon Fusion Lab</h1>
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <img
-              src="../public/pokeball.svg"
+              src="/public/pokeball.svg"
               alt="Pokeball"
               className="w-10 h-10"
             />
