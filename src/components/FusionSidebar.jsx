@@ -41,7 +41,7 @@ const FusionSidebar = ({
   return (
     <>
       <motion.div
-        className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg p-6 overflow-y-auto"
+        className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-lg p-6 overflow-y-auto z-50"
         initial="hidden"
         animate="visible"
         exit="hidden"

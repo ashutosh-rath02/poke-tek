@@ -76,12 +76,8 @@ const FusionLab = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <div
-        className={`flex-grow transition-all duration-300 ease-in-out ${
-          showSidebar ? "md:mr-80" : ""
-        }`}
-      >
+    <div className="flex flex-col lg:flex-row min-h-screen">
+      <div className="flex-grow p-4 lg:p-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

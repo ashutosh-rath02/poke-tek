@@ -153,11 +153,9 @@ const PokemonList = ({ onPokemonSelect, selectedPokemon }) => {
   };
 
   return (
-    <div
-      className={`transition-all duration-300 ${selectedInfo ? "ml-80" : ""}`}
-    >
-      <div className="mb-6 flex items-start space-x-4">
-        <div className="flex-grow">
+    <div className="w-full">
+      <div className="mb-6 flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="w-full sm:w-2/3">
           <input
             type="text"
             placeholder="Search Pokémon..."
@@ -166,10 +164,12 @@ const PokemonList = ({ onPokemonSelect, selectedPokemon }) => {
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           />
         </div>
-        <Filters onFilterChange={handleFilterChange} />
+        <div className="w-full sm:w-1/3">
+          <Filters onFilterChange={handleFilterChange} />
+        </div>
       </div>
       {error && <p className="text-center text-red-500 mb-4">{error}</p>}
-      <div className="flex flex-row flex-wrap mx-auto gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {filteredPokemonList.map((pokemon) => (
           <PokemonCard
             key={pokemon.name}

@@ -36,7 +36,7 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-9">
       <button
         onClick={() => setShowFilters(!showFilters)}
         className="px-4 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
