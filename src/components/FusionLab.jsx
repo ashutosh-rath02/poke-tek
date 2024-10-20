@@ -77,7 +77,7 @@ const FusionLab = () => {
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">
-      <div className="flex-grow p-4 lg:p-8">
+      <div className="flex-grow">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
