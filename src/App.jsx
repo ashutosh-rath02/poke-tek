@@ -12,13 +12,13 @@ function App() {
           className="container mx-auto flex items-center justify-between"
         >
           <h1 className="text-3xl font-bold">Pokémon Fusion Lab</h1>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          {/* <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <img
               src="https://www.svgrepo.com/show/276264/pokeball-pokemon.svg"
               alt="Pokeball"
               className="w-10 h-10"
             />
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </header>
       <main className="container mx-auto">
